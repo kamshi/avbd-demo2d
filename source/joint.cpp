@@ -77,6 +77,7 @@ void Joint::computeDerivatives(Rigid* body)
 
 void Joint::draw() const
 {
+#ifndef AVBD_HEADLESS
     float2 v0 = bodyA ? transform(bodyA->position, rA) : rA;
     float2 v1 = transform(bodyB->position, rB);
 
@@ -85,4 +86,5 @@ void Joint::draw() const
     glVertex2f(v0.x, v0.y);
     glVertex2f(v1.x, v1.y);
     glEnd();
+#endif // AVBD_HEADLESS
 }

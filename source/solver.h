@@ -11,6 +11,13 @@
 
 #pragma once
 
+// When AVBD_HEADLESS is defined, the solver is compiled without any windowing or
+// OpenGL dependencies. This is used by the reference-data generator and the unit
+// tests, which only need the simulation core (no rendering). All draw() methods
+// become no-ops in this configuration. The interactive demo (main.cpp) is built
+// without this macro and keeps full rendering.
+#ifndef AVBD_HEADLESS
+
 #ifdef _WIN32
 #define WIN32_LEAN_AND_MEAN
 #define NOMINMAX
@@ -22,6 +29,8 @@
 #else
 #include <GL/gl.h>
 #endif
+
+#endif // AVBD_HEADLESS
 
 #include "maths.h"
 

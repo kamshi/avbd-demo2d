@@ -126,6 +126,7 @@ void Manifold::computeDerivatives(Rigid* body)
 
 void Manifold::draw() const
 {
+#ifndef AVBD_HEADLESS
     if (!SHOW_CONTACTS)
         return;
 
@@ -140,4 +141,5 @@ void Manifold::draw() const
         glVertex2f(v1.x, v1.y);
         glEnd();
     }
+#endif // AVBD_HEADLESS
 }

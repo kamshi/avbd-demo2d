@@ -44,6 +44,7 @@ bool Rigid::constrainedTo(Rigid* other) const
 
 void Rigid::draw()
 {
+#ifndef AVBD_HEADLESS
     float2x2 R = rotation(position.z);
     float2 v0 = R * float2{ -size.x * 0.5f, -size.y * 0.5f } + position.xy();
     float2 v1 = R * float2{ size.x * 0.5f, -size.y * 0.5f } + position.xy();
@@ -65,4 +66,5 @@ void Rigid::draw()
     glVertex2f(v2.x, v2.y);
     glVertex2f(v3.x, v3.y);
     glEnd();
+#endif // AVBD_HEADLESS
 }

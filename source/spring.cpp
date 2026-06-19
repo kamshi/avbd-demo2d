@@ -73,6 +73,7 @@ void Spring::computeDerivatives(Rigid* body)
 
 void Spring::draw() const
 {
+#ifndef AVBD_HEADLESS
     float2 v0 = transform(bodyA->position, rA);
     float2 v1 = transform(bodyB->position, rB);
 
@@ -81,4 +82,5 @@ void Spring::draw() const
     glVertex2f(v0.x, v0.y);
     glVertex2f(v1.x, v1.y);
     glEnd();
+#endif // AVBD_HEADLESS
 }

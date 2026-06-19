@@ -59,3 +59,36 @@ if(WIN32)
             $<TARGET_FILE_DIR:${PROJECT_NAME}> # Output directory of the executable
     )
 endif()
+
+# ---------------------------------------------------------------------------
+# Headless tools: reference-data generator and unit tests
+#
+# These targets build only the simulation core, with no SDL / ImGui / OpenGL
+# dependency, by compiling with AVBD_HEADLESS defined (see source/solver.h).
+# - avbd_generate: produces golden reference data for verifying a port.
+# - avbd_tests:    runs the unit tests (wired into CTest).
+# See VERIFICATION.md for details.
+# ---------------------------------------------------------------------------
+
+# Core solver sources: everything in source/ except the interactive demo entry
+# point (main.cpp), which pulls in SDL/OpenGL.
+set(CORE_SOURCES
+    source/collide.cpp
+    source/force.cpp
+    source/joint.cpp
+    source/manifold.cpp
+    source/motor.cpp
+    source/rigid.cpp
+    source/solver.cpp
+    source/spring.cpp
+)
+
+add_executable(avbd_generate tools/generate.cpp ${CORE_SOURCES})
+target_include_directories(avbd_generate PRIVATE source)
+target_compile_definitions(avbd_generate PRIVATE AVBD_HEADLESS _CRT_SECURE_NO_WARNINGS)
+
+enable_testing()
+add_executable(avbd_tests tests/tests.cpp ${CORE_SOURCES})
+target_include_directories(avbd_tests PRIVATE source)
+target_compile_definitions(avbd_tests PRIVATE AVBD_HEADLESS _CRT_SECURE_NO_WARNINGS)
+add_test(NAME unit_tests COMMAND avbd_tests)

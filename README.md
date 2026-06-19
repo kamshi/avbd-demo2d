@@ -47,3 +47,21 @@ ninja
 ```
 
 To run, open avbd_demo2d.html in your browser.
+
+## Reference data & tests
+
+Besides the interactive demo, the build produces two headless tools (no
+SDL/OpenGL required), used to verify a port of the solver and to test it:
+
+- `avbd_generate` — runs a scene and writes the full per-step body state as CSV
+  golden reference data.
+- `avbd_tests` — the unit test suite (also runnable via `ctest`).
+
+```
+cmake --build . --config Release --target avbd_generate avbd_tests
+ctest -C Release --output-on-failure
+./Release/avbd_generate --list
+```
+
+See [VERIFICATION.md](VERIFICATION.md) for the data format and the full
+generate/consume/verify workflow.
